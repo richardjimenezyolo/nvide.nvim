@@ -1,0 +1,12 @@
+vim.keymap.set('n', "<C-b>", ":NvimTreeToggle<CR>")
+vim.keymap.set('i', "<C-s>", "<Esc>:wa<CR>")
+vim.keymap.set('n', "<C-s>", "<Esc>:wa<CR>")
+vim.keymap.set('n', "<C-p>", ":Telescope find_files<CR>")
+vim.keymap.set('n', "<C-Left>", ":bprev<CR>")
+vim.keymap.set('n', "<C-Right>", ":bnext<CR>")
+vim.keymap.set('n', "<C-h>", ":bprev<CR>")
+vim.keymap.set('n', "<C-l>", ":bnext<CR>")
+vim.keymap.set('n', "<C-c>", ":q<CR>")
+vim.keymap.set('n', "<C-f>", ":LspZeroFormat<CR>")
+-- vim.command.set('Qa', ":qa")
+
