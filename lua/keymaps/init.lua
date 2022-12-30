@@ -12,5 +12,8 @@ vim.keymap.set('n', "<leader>ve", ":e ~/.config/nvim/init.lua<CR>")
 vim.keymap.set('n', "<leader>g", ":Neogit<CR>")
 vim.keymap.set('n', "<leader>a", vim.lsp.buf.code_action)
 vim.keymap.set('n', "L", vim.diagnostic.open_float)
+vim.keymap.set('n', "R", ":Telescope lsp_references<CR>")
+vim.keymap.set('n', "<space>s", ":Telescope lsp_workspace_symbols<CR>")
+vim.keymap.set('n', "tt", ":hi Normal guibg=NONE ctermbg=NONE<CR>")
 -- vim.command.set('Qa', ":qa")
 
