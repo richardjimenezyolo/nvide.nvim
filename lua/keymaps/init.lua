@@ -11,6 +11,6 @@ vim.keymap.set('n', "<C-f>", ":LspZeroFormat<CR>")
 vim.keymap.set('n', "<leader>ve", ":e ~/.config/nvim/init.lua<CR>")
 vim.keymap.set('n', "<leader>g", ":Neogit<CR>")
 vim.keymap.set('n', "<leader>a", ":lua vim.lsp.buf.code_action()<CR>")
-vim.keymap.set('n', "L", ":vim.diagnostic.open_float()<CR>")
+vim.keymap.set('n', "L", ":lua vim.diagnostic.open_float()<CR>")
 -- vim.command.set('Qa', ":qa")
 
