@@ -6,3 +6,5 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.tabstop = 2
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
+vim.opt.scrolloff = 8
+vim.opt.hlsearch = false

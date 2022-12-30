@@ -61,6 +61,7 @@ require('packer').startup(function(use)
   -- Git
   use { 'tpope/vim-fugitive' }
   use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+
 end)
 
 -- empty setup using defaults
@@ -127,7 +128,6 @@ autocmd VimEnter * :NvimTreeOpen
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertEnter * :set number
 autocmd InsertLeave * :set relativenumber
-
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='dracula'
