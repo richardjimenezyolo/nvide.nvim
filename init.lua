@@ -4,6 +4,7 @@ require("keymaps")
 require("config")
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
+  use 'puremourning/vimspector'
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
     -- or                            , branch = '0.1.x',
@@ -61,6 +62,12 @@ require('packer').startup(function(use)
   use { 'tpope/vim-commentary' }
 
   -- Git
+  use {
+    'tanvirtin/vgit.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    }
+  }
   use { 'tpope/vim-fugitive' }
   use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
 
@@ -68,6 +75,8 @@ require('packer').startup(function(use)
   use 'mg979/vim-visual-multi'
 
   use 'p00f/nvim-ts-rainbow'
+  use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
+  use "lukas-reineke/indent-blankline.nvim"
 end)
 
 -- empty setup using defaults
@@ -106,14 +115,29 @@ lsp.setup()
 local neogit = require('neogit')
 neogit.setup {}
 
+require('vgit').setup()
+
+
+require("bufferline").setup {
+  options = {
+    hover = {
+      enabled = true,
+      delay = 100,
+      reveal = { 'close' }
+    },
+    diagnostics = "nvim_lsp"
+  }
+}
+
 vim.cmd([[
 command Qa :qa
 autocmd VimEnter * :NvimTreeOpen
+autocmd CursorHold * :lua vim.diagnostic.open_float()
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertEnter * :set number
 autocmd InsertLeave * :set relativenumber
 
-let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='dracula'
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
