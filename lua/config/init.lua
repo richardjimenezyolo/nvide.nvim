@@ -10,4 +10,4 @@ vim.opt.scrolloff = 8
 vim.opt.hlsearch = false
 vim.opt.updatetime = 300
 vim.opt.mousemoveevent = true
-
+vim.cmd.colorscheme('onedarkhc')

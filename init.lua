@@ -19,13 +19,10 @@ require('packer').startup(function(use)
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
 
-  use({
-    'rose-pine/neovim',
-    as = 'rose-pine',
-    config = function()
-      vim.cmd('colorscheme rose-pine')
-    end
-  })
+  use { 'sonph/onehalf', rtp = 'vim' }
+  use 'pacokwon/onedarkhc.vim'
+  use 'olimorris/onedarkpro.nvim'
+  use({ 'rose-pine/neovim', as = 'rose-pine', })
   use 'morhetz/gruvbox'
   use 'NLKNguyen/papercolor-theme'
 
@@ -80,7 +77,13 @@ require('packer').startup(function(use)
 end)
 
 -- empty setup using defaults
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+  view = {
+    adaptive_size = true,
+    side = "left",
+    width = 30,
+  },
+})
 
 require 'nvim-treesitter.configs'.setup {
   ensure_installed = { "c", "lua", "rust" },
@@ -92,6 +95,14 @@ require 'nvim-treesitter.configs'.setup {
     enable = true,
     additional_vim_regex_highlighting = false,
   },
+
+  disable = function(lang, buf)
+    local max_filesize = 100 * 1024 -- 100 KB
+    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+    if ok and stats and stats.size > max_filesize then
+      return true
+    end
+  end,
 
   rainbow = {
     enable = true,
@@ -125,7 +136,14 @@ require("bufferline").setup {
       delay = 100,
       reveal = { 'close' }
     },
-    diagnostics = "nvim_lsp"
+    numbers='buffer_id',
+    color_icons=true,
+    diagnostics = "nvim_lsp",
+    separator_style = 'thick',
+    diagnostics_indicator = function(count, level, diagnostics_dict, context)
+      local icon = level:match("error") and " " or " "
+      return " " .. icon .. count
+    end
   }
 }
 
