@@ -4,7 +4,9 @@ require("keymaps")
 require("config")
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
-  use 'puremourning/vimspector'
+
+  use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
     -- or                            , branch = '0.1.x',
@@ -19,9 +21,7 @@ require('packer').startup(function(use)
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
 
-  use { 'sonph/onehalf', rtp = 'vim' }
-  use 'pacokwon/onedarkhc.vim'
-  use 'olimorris/onedarkpro.nvim'
+  use 'navarasu/onedark.nvim'
   use({ 'rose-pine/neovim', as = 'rose-pine', })
   use 'morhetz/gruvbox'
   use 'NLKNguyen/papercolor-theme'
@@ -74,7 +74,10 @@ require('packer').startup(function(use)
   use 'p00f/nvim-ts-rainbow'
   use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
   use "lukas-reineke/indent-blankline.nvim"
+  use 'j-hui/fidget.nvim'
 end)
+
+require("debugger")
 
 -- empty setup using defaults
 require("nvim-tree").setup({
@@ -94,6 +97,16 @@ require 'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
+  },
+
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<C-Space>", -- set to `false` to disable one of the mappings
+      node_incremental = "<C-Space>"
+      -- scope_incremental = "grc",
+      -- node_decremental = "grm",
+    },
   },
 
   disable = function(lang, buf)
@@ -136,8 +149,8 @@ require("bufferline").setup {
       delay = 100,
       reveal = { 'close' }
     },
-    numbers='buffer_id',
-    color_icons=true,
+    numbers = 'buffer_id',
+    color_icons = true,
     diagnostics = "nvim_lsp",
     separator_style = 'thick',
     diagnostics_indicator = function(count, level, diagnostics_dict, context)
@@ -146,6 +159,13 @@ require("bufferline").setup {
     end
   }
 }
+
+require "fidget".setup {}
+
+require('onedark').setup {
+  style = 'deep'
+}
+require('onedark').load()
 
 vim.cmd([[
 command Qa :qa
@@ -156,7 +176,7 @@ autocmd InsertEnter * :set number
 autocmd InsertLeave * :set relativenumber
 
 " let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='dracula'
+let g:airline_theme='onedark'
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
