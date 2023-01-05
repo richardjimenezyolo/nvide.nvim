@@ -21,6 +21,7 @@ require('packer').startup(function(use)
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
 
+  use 'ntk148v/vim-horizon'
   use 'navarasu/onedark.nvim'
   use({ 'rose-pine/neovim', as = 'rose-pine', })
   use 'morhetz/gruvbox'
@@ -166,7 +167,7 @@ require("bufferline").setup {
     numbers = 'buffer_id',
     color_icons = true,
     diagnostics = "nvim_lsp",
-    separator_style = 'thick',
+    separator_style = 'padded_slant',
     diagnostics_indicator = function(count, level, diagnostics_dict, context)
       local icon = level:match("error") and " " or " "
       return " " .. icon .. count
