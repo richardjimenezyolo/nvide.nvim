@@ -76,6 +76,7 @@ require('packer').startup(function(use)
   use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
   use "lukas-reineke/indent-blankline.nvim"
   use 'j-hui/fidget.nvim'
+  use 'mbbill/undotree'
   use {
   "klen/nvim-config-local",
   config = function()
