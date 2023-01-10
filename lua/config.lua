@@ -11,3 +11,5 @@ vim.opt.hlsearch = false
 vim.opt.updatetime = 300
 vim.opt.mousemoveevent = true
 vim.cmd.colorscheme('onedark')
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"

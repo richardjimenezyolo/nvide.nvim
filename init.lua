@@ -1,7 +1,17 @@
-vim.cmd [[packadd packer.nvim]]
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
 
-require("keymaps")
-require("config")
+local packer_bootstrap = ensure_packer()
+
+vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
@@ -72,28 +82,38 @@ require('packer').startup(function(use)
   -- Multi-cursos
   use 'mg979/vim-visual-multi'
 
-  use 'p00f/nvim-ts-rainbow'
+  use {
+    'p00f/nvim-ts-rainbow',
+    requires = { 'nvim-treesitter/nvim-treesitter' }
+  }
   use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
   use "lukas-reineke/indent-blankline.nvim"
   use 'j-hui/fidget.nvim'
   use 'mbbill/undotree'
+  use 'instant-markdown/vim-instant-markdown'
   use {
-  "klen/nvim-config-local",
-  config = function()
-    require('config-local').setup {
-      -- Default configuration (optional)
-      config_files = { ".vimrc.lua", ".vimrc" },  -- Config file patterns to load (lua supported)
-      hashfile = vim.fn.stdpath("data") .. "/config-local", -- Where the plugin keeps files data
-      autocommands_create = true,                 -- Create autocommands (VimEnter, DirectoryChanged)
-      commands_create = true,                     -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
-      silent = false,                             -- Disable plugin messages (Config loaded/ignored)
-      lookup_parents = false,                     -- Lookup config files in parent directories
-    }
+    "klen/nvim-config-local",
+    config = function()
+      require('config-local').setup {
+        -- Default configuration (optional)
+        config_files = { ".vimrc.lua", ".vimrc" }, -- Config file patterns to load (lua supported)
+        hashfile = vim.fn.stdpath("data") .. "/config-local", -- Where the plugin keeps files data
+        autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
+        commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
+        silent = false, -- Disable plugin messages (Config loaded/ignored)
+        lookup_parents = false, -- Lookup config files in parent directories
+      }
+    end
+  }
+
+  if packer_bootstrap then
+    require('packer').sync()
   end
-}
 end)
 
 require("debugger")
+require("keymaps")
+require("config")
 
 -- empty setup using defaults
 require("nvim-tree").setup({
@@ -186,6 +206,7 @@ require('onedark').load()
 vim.cmd([[
 command Qa :qa
 autocmd VimEnter * :NvimTreeOpen
+autocmd BufReadPost * :normal zR
 autocmd CursorHold * :lua vim.diagnostic.open_float()
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertEnter * :set number
