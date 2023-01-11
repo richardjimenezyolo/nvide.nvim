@@ -92,14 +92,6 @@ require('onedark').setup {
 require('onedark').load()
 
 vim.cmd([[
-command! Qa :qa
-autocmd VimEnter * :NvimTreeOpen
-autocmd BufEnter * :normal zR
-autocmd CursorHold * :lua vim.diagnostic.open_float()
-autocmd InsertEnter * :set norelativenumber
-autocmd InsertEnter * :set number
-autocmd InsertLeave * :set relativenumber
-
 " let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='onedark'
 if !exists('g:airline_symbols')

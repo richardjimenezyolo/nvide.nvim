@@ -13,3 +13,15 @@ vim.opt.mousemoveevent = true
 vim.cmd.colorscheme('onedark')
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
+vim.cmd([[
+command! Qa :qa
+autocmd VimEnter * :NvimTreeOpen
+autocmd BufEnter * :normal zR
+autocmd BufReadPost * :NvimTreeFindFile
+autocmd BufReadPost * :wincmd p
+autocmd CursorHold * :lua vim.diagnostic.open_float()
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
+]])
