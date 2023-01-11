@@ -3,6 +3,10 @@ require("debugger")
 require("keymaps")
 require("config")
 
+require("mason-lspconfig").setup {
+    ensure_installed = { "sumneko_lua", "phpactor" },
+}
+
 -- empty setup using defaults
 require("nvim-tree").setup({
   view = {
