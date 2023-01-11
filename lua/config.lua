@@ -1,4 +1,4 @@
-vim .opt.smartindent = true
+vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
@@ -17,9 +17,9 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.cmd([[
 command! Qa :qa
 autocmd VimEnter * :NvimTreeOpen
+autocmd VimEnter * :set number
+autocmd VimEnter * :set relativenumber
 autocmd BufEnter * :normal zR
-autocmd BufReadPost * :NvimTreeFindFile
-autocmd BufReadPost * :wincmd p
 autocmd CursorHold * :lua vim.diagnostic.open_float()
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertEnter * :set number
