@@ -1,10 +1,10 @@
 require("plugins")
-require("debugger")
 require("keymaps")
 require("config")
+require("debugger")
 
 require("mason-lspconfig").setup {
-    ensure_installed = { "sumneko_lua", "phpactor" },
+  ensure_installed = { "sumneko_lua", "phpactor" },
 }
 
 -- empty setup using defaults
@@ -95,40 +95,14 @@ require('onedark').setup {
 }
 require('onedark').load()
 
-vim.cmd([[
-" let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='onedark'
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.linenr = '☰'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.maxlinenr = '㏑'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.spell = 'Ꞩ'
-let g:airline_symbols.notexists = 'Ɇ'
-let g:airline_symbols.whitespace = 'Ξ'
+require('lualine').setup()
 
-" powerline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = '' 
-let g:airline_symbols.linenr = '☰'   
-let g:airline_symbols.maxlinenr = ' '
-let g:airline_symbols.dirty = '⚡'
-]])
+require('config-local').setup {
+  -- Default configuration (optional)
+  config_files = { ".vimrc.lua", ".vimrc" }, -- Config file patterns to load (lua supported)
+  hashfile = vim.fn.stdpath("data") .. "/config-local", -- Where the plugin keeps files data
+  autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
+  commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
+  silent = false, -- Disable plugin messages (Config loaded/ignored)
+  lookup_parents = false, -- Lookup config files in parent directories
+}

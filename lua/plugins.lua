@@ -31,11 +31,13 @@ require('packer').startup(function(use)
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
 
+  use { "catppuccin/nvim", as = "catppuccin" }
   use 'ntk148v/vim-horizon'
   use 'navarasu/onedark.nvim'
   use({ 'rose-pine/neovim', as = 'rose-pine', })
   use 'morhetz/gruvbox'
   use 'NLKNguyen/papercolor-theme'
+  use { 'dracula/vim' }
 
   use({
     'nvim-treesitter/nvim-treesitter',
@@ -64,8 +66,8 @@ require('packer').startup(function(use)
     }
   }
 
-  use { 'vim-airline/vim-airline', requires = { 'vim-airline/vim-airline-themes' } }
-  use { 'dracula/vim' }
+  use { 'akinsho/bufferline.nvim', tag = "v3.*" }
+  use 'nvim-lualine/lualine.nvim'
   use { 'editorconfig/editorconfig-vim' }
   use { 'tpope/vim-commentary' }
 
@@ -86,25 +88,11 @@ require('packer').startup(function(use)
     'p00f/nvim-ts-rainbow',
     requires = { 'nvim-treesitter/nvim-treesitter' }
   }
-  use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
   use "lukas-reineke/indent-blankline.nvim"
   use 'j-hui/fidget.nvim'
   use 'mbbill/undotree'
   use 'instant-markdown/vim-instant-markdown'
-  use {
-    "klen/nvim-config-local",
-    config = function()
-      require('config-local').setup {
-        -- Default configuration (optional)
-        config_files = { ".vimrc.lua", ".vimrc" }, -- Config file patterns to load (lua supported)
-        hashfile = vim.fn.stdpath("data") .. "/config-local", -- Where the plugin keeps files data
-        autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
-        commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
-        silent = false, -- Disable plugin messages (Config loaded/ignored)
-        lookup_parents = false, -- Lookup config files in parent directories
-      }
-    end
-  }
+  use { "klen/nvim-config-local" }
 
   if packer_bootstrap then
     require('packer').sync()
