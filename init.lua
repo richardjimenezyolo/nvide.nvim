@@ -3,9 +3,8 @@ require("keymaps")
 require("config")
 require("debugger")
 
-require("mason-lspconfig").setup {
-  ensure_installed = { "sumneko_lua", "phpactor" },
-}
+require("mason").setup()
+require("mason-lspconfig").setup()
 
 -- empty setup using defaults
 require("nvim-tree").setup({
@@ -28,7 +27,7 @@ require 'nvim-treesitter.configs'.setup {
   },
 
   incremental_selection = {
-    enable = true,
+  enable = true,
     keymaps = {
       init_selection = "<C-Space>", -- set to `false` to disable one of the mappings
       node_incremental = "<C-Space>"
@@ -58,11 +57,20 @@ require 'nvim-treesitter.configs'.setup {
 -- NOTE: This line set the backgroud transparent
 -- vim.api.nvim_set_hl(0, "Normal", {bg = "none"})
 
-local lsp = require('lsp-zero')
 
-lsp.preset('recommended')
-lsp.nvim_workspace()
+local lsp = require('lsp-zero').preset({})
+
+lsp.on_attach(function(client, bufnr)
+  -- see :help lsp-zero-keybindings
+  -- to learn the available actions
+  lsp.default_keymaps({buffer = bufnr})
+end)
+
+-- (Optional) Configure lua language server for neovim
+require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+
 lsp.setup()
+
 
 local neogit = require('neogit')
 neogit.setup {}
@@ -88,7 +96,7 @@ require("bufferline").setup {
   }
 }
 
-require "fidget".setup {}
+-- require "fidget".setup {}
 
 require('onedark').setup {
   style = 'deep'
@@ -106,3 +114,11 @@ require('config-local').setup {
   silent = false, -- Disable plugin messages (Config loaded/ignored)
   lookup_parents = false, -- Lookup config files in parent directories
 }
+
+local cmp = require('cmp')
+
+cmp.setup({
+  mapping = cmp.mapping.preset.insert({
+    ['<CR>'] = cmp.mapping.confirm({select = true}),
+  })
+})
