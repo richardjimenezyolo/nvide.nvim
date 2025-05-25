@@ -1,4 +1,4 @@
- local ensure_packer =function()
+local ensure_packer = function()
 	local fn = vim.fn
 	local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 	if fn.empty(fn.glob(install_path)) > 0 then
@@ -60,6 +60,14 @@ require('packer').startup(function(use)
 
 	use 'tpope/vim-fugitive'
 
+	use {
+		'tanvirtin/vgit.nvim',
+		requires = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons' },
+		-- Lazy loading on 'VimEnter' event is necessary.
+		event = 'VimEnter',
+		config = function() require("vgit").setup() end,
+	}
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if packer_bootstrap then
@@ -83,7 +91,24 @@ require("mason-lspconfig").setup()
 require('fidget').setup()
 
 vim.opt.termguicolors = true
-require("bufferline").setup()
+
+require("bufferline").setup {
+	options = {
+		hover = {
+			enabled = true,
+			delay = 100,
+			reveal = { 'close' }
+		},
+		numbers = 'buffer_id',
+		color_icons = true,
+		diagnostics = "nvim_lsp",
+		separator_style = 'padded_slant',
+		diagnostics_indicator = function(count, level, diagnostics_dict, context)
+			local icon = level:match("error") and " " or " "
+			return " " .. icon .. count
+		end
+	}
+}
 
 require("mason-conform").setup()
 
@@ -197,6 +222,7 @@ vim.api.nvim_create_user_command("Format", function(args)
 	require("conform").format({ async = true, lsp_format = "fallback", range = range })
 end, { range = true })
 
+vim.keymap.set('n', "<leader>ve", ":e ~/.config/nvim/init.lua<CR>")
 vim.keymap.set('n', '<C-b>', ':NvimTreeToggle<CR>')
 vim.keymap.set('n', '<C-c>', ':q<CR>')
 vim.keymap.set('n', '<C-s>', ':w<CR>')
@@ -205,6 +231,8 @@ vim.keymap.set('n', '<C-e>', ':Telescope buffers<CR>')
 vim.keymap.set('n', '<C-p>', ':Telescope find_files<CR>')
 vim.keymap.set('n', '<C-f>', ':Format<CR>')
 vim.keymap.set('n', "<space>s", ":Telescope lsp_workspace_symbols<CR>")
+vim.keymap.set('n', "gr", ":Telescope lsp_references<CR>")
+vim.keymap.set('n', "<leader>a", vim.lsp.buf.code_action)
 vim.keymap.set('n', "<C-O>", ":Telescope lsp_document_symbols<CR>")
 vim.keymap.set('n', "L", vim.diagnostic.open_float)
 vim.keymap.set('n', "tt", ":hi Normal guibg=NONE ctermbg=NONE<CR>")
@@ -212,5 +240,17 @@ vim.keymap.set('n', "<leader>g", ":Neogit<CR>")
 vim.keymap.set('v', "<", "<gv")
 vim.keymap.set('v', ">", ">gv")
 
+vim.opt.updatetime = 300
 vim.cmd("colorscheme rose-pine-moon")
 vim.cmd("set number")
+vim.cmd([[
+	command! Qa :qa
+	autocmd VimEnter * :NvimTreeOpen
+	autocmd VimEnter * :set number
+	autocmd VimEnter * :set relativenumber
+	"autocmd BufEnter * :normal zR
+	autocmd CursorHold * :lua vim.diagnostic.open_float()
+	autocmd InsertEnter * :set norelativenumber
+	autocmd InsertEnter * :set number
+	autocmd InsertLeave * :set relativenumber
+]])
