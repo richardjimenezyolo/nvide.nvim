@@ -58,6 +58,8 @@ require('packer').startup(function(use)
 		}
 	}
 
+	use 'tpope/vim-fugitive'
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if packer_bootstrap then
@@ -198,11 +200,15 @@ end, { range = true })
 vim.keymap.set('n', '<C-b>', ':NvimTreeToggle<CR>')
 vim.keymap.set('n', '<C-c>', ':q<CR>')
 vim.keymap.set('n', '<C-s>', ':w<CR>')
+vim.keymap.set('i', "<C-s>", "<Esc>:wa<CR>")
 vim.keymap.set('n', '<C-e>', ':Telescope buffers<CR>')
 vim.keymap.set('n', '<C-p>', ':Telescope find_files<CR>')
 vim.keymap.set('n', '<C-f>', ':Format<CR>')
 vim.keymap.set('n', "<space>s", ":Telescope lsp_workspace_symbols<CR>")
 vim.keymap.set('n', "<C-O>", ":Telescope lsp_document_symbols<CR>")
+vim.keymap.set('n', "L", vim.diagnostic.open_float)
+vim.keymap.set('n', "tt", ":hi Normal guibg=NONE ctermbg=NONE<CR>")
+vim.keymap.set('n', "<leader>g", ":Neogit<CR>")
 vim.keymap.set('v', "<", "<gv")
 vim.keymap.set('v', ">", ">gv")
 
