@@ -253,4 +253,6 @@ vim.cmd([[
 	autocmd InsertEnter * :set norelativenumber
 	autocmd InsertEnter * :set number
 	autocmd InsertLeave * :set relativenumber
+	let g:db_ui_win_position = 'right'
+
 ]])
