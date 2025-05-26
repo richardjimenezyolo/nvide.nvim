@@ -1,5 +1,5 @@
 vim.keymap.set('n', "<leader>ve", ":e ~/.config/nvim/init.lua<CR>")
-vim.keymap.set('n', '<C-b>', ':NvimTreeToggle<CR>')
+vim.keymap.set('n', "<C-b>", ":NvimTreeFindFileToggle<CR>")
 vim.keymap.set('n', '<C-c>', ':q<CR>')
 vim.keymap.set('n', '<C-s>', ':w<CR>')
 vim.keymap.set('i', "<C-s>", "<Esc>:wa<CR>")
