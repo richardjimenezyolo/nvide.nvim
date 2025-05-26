@@ -3,6 +3,7 @@ require('keymaps')
 require('debug_config')
 
 
+vim.opt.scrolloff = 8
 vim.opt.updatetime = 300
 vim.cmd("colorscheme rose-pine-moon")
 vim.cmd("set number")
